@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\mahasiswaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $title = 'Login Page';
+    $slug = 'dashboard';
+    return view('layoutadmin.dashboard', compact('title', 'slug'));
 });
+
+Route::get('/dashboard', function () {
+    $title = 'Dashboard';
+    $slug = 'dashboard';
+    return view('layoutadmin.dashboard', compact('title', 'slug'));
+});
+
+Route::get('/mahasiswa', [mahasiswaController::class, 'index']);
+Route::get('/mahasiswa/create', [mahasiswaController::class, 'create']);
+Route::post('/mahasiswa/store', [mahasiswaController::class, 'store']);
+Route::post('/mahasiswa/edit{id}', [mahasiswaController::class, 'edit']);
+Route::post('/mahasiswa/update{id}', [mahasiswaController::class, 'update']);
+Route::post('/mahasiswa/destroy{id}', [mahasiswaController::class, 'destroy']);

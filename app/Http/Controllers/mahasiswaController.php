@@ -13,7 +13,11 @@ class mahasiswaController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Mahasiswa';
+        $slug = 'mahasiswa';
+        $dataMhs = mahasiswa::join('prodi', 'mahasiswa.kd_prodi','=','prodi.kd_prodi')
+        ->get();
+        return view('mahasiswa.index', compact('title','slug','dataMhs'));
     }
 
     /**
@@ -21,7 +25,10 @@ class mahasiswaController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Tambah Data Mahasiswa';
+        $slug = 'mahasiswa';
+        $dataProdi = prodi::all();
+        return view('produk.create', compact('title','slug','dataProdi'));
     }
 
     /**
@@ -29,7 +36,19 @@ class mahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $result = mahasiswa::insert([
+            'nim_mahasiswa'=> $request->nim,
+            'nama_mahasiswa'=> $request->nama,
+            'angkatan_mahasiswa'=> $request->angkatan,
+            'kd_prodi'=> $request->prodi,
+            'created_at'=> now(),
+            'updated_at'=> now()
+        ]);
+        if($result){
+            return redirect('/mahasiswa');
+        }else{
+            return $this->create();
+        }
     }
 
     /**
@@ -37,30 +56,44 @@ class mahasiswaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+        $title = 'Perbarui Data Mahasiswa';
+        $slug = 'mahasiswa';
+        $dataMhs = mahasiswa::join('prodi', 'mahasiswa.kd_prodi','=','prodi.kd_prodi')
+                    ->where('nim_mahasiswa','=', $id)
+                    ->first();
+        $dataProdi = prodi::all();
+        return view('mahasiswa.update', compact('title','slug','dataMhs','dataProdi'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $id = $request->nim;
+        mahasiswa::where('nim_mahasiswa', $id)
+                    ->update([
+                        'nama_mahasiswa' => $request->nama,
+                        'angkatan_mahasiswa' => $request->angkatan,
+                        'kd_prodi' => $request->prodi,
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        mahasiswa::where('nim_mahasiswa', $id)
+        ->delete();
+        return redirect('/mahasiswa');
     }
 }

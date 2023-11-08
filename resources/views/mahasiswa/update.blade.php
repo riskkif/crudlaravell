@@ -1,7 +1,7 @@
 @extends('layoutadmin.main')
 @section('content')
     <h2>update mahasiswa</h2>
-    <form action="/mahasiswa/update{{ $dataMhs->nim_mahasiswa }}" method="POST">
+    <form action="/mahasiswa/update/{{ $dataMhs->nim_mahasiswa }}" method="POST">
         {{ csrf_field() }}
             <input type="hidden" name="nim" value="{{ $dataMhs->nim_mahasiswa }}">
         <div class="mb-3">

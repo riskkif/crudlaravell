@@ -9,4 +9,6 @@ class mahasiswa extends Model
 {
     use HasFactory;
     public $table = "mahasiswa";
+    protected $primaryKey = 'nim_mahasiswa';
+    
 }

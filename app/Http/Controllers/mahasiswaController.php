@@ -62,7 +62,7 @@ class mahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit($id)
     {
         $title = 'Perbarui Data Mahasiswa';
         $slug = 'mahasiswa';
@@ -76,10 +76,10 @@ class mahasiswaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request,  $id)
     {
         $id = $request->nim;
-        mahasiswa::where('nim_mahasiswa', $id)
+        mahasiswa::where('nim_mahasiswa','=', $id)
                     ->update([
                         'nama_mahasiswa' => $request->nama,
                         'angkatan_mahasiswa' => $request->angkatan,
@@ -90,10 +90,11 @@ class mahasiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy($id)
     {
-        mahasiswa::where('nim_mahasiswa', $id)
+        mahasiswa::where('nim_mahasiswa',$id)
         ->delete();
+        
         return redirect('/mahasiswa');
     }
 }

@@ -30,6 +30,7 @@ Route::get('/dashboard', function () {
 Route::get('/mahasiswa', [mahasiswaController::class, 'index']);
 Route::get('/mahasiswa/create', [mahasiswaController::class, 'create']);
 Route::post('/mahasiswa/store', [mahasiswaController::class, 'store']);
-Route::get('/mahasiswa/edit{id}', [mahasiswaController::class, 'edit']);
-Route::post('/mahasiswa/update{id}', [mahasiswaController::class, 'update']);
-Route::get('/mahasiswa/destroy{id}', [mahasiswaController::class, 'destroy']);
+Route::get('/mahasiswa/edit/{id}', [mahasiswaController::class, 'edit']);
+Route::post('/mahasiswa/update/{id}', [mahasiswaController::class, 'update']);
+Route::get('/mahasiswa/destroy/{id}', [mahasiswaController::class, 'destroy']);
+

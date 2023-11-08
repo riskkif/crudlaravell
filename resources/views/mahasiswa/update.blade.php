@@ -24,7 +24,7 @@
             <select name="prodi" class="form-control" required>
                 <option value="{{ $dataMhs->kd_prodi }}">{{ $dataMhs->nim_prodi }}</option>
                 @foreach ($dataProdi as $item)
-                    @if ($item->kd_prodi <> $dataMhs->kd_prodi)
+                    @if ($item->kd_prodi = $dataMhs->kd_prodi)
                 <option value="{{ $item->kd_prodi }}">{{ $item->nama_prodi }}</option>
                 @endif
                 @endforeach

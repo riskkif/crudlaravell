@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\mahasiswa;
 use App\Models\prodi;
 
-class mahasiswaController extends Controller
+class prodiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $title = 'Mahasiswa';
-        $slug = 'mahasiswa';
+        $title = 'prodi';
+        $slug = 'prodi';
+        $dataProdi = prodi::all();
         $dataMhs = mahasiswa::join('prodi', 'mahasiswa.kd_prodi','=','prodi.kd_prodi')
         ->get();
-        return view('mahasiswa.index', compact('title','slug','dataMhs'));
+        return view('prodi.index', compact('title','slug','dataMhs','dataProdi'));
     }
 
     /**
@@ -25,10 +26,10 @@ class mahasiswaController extends Controller
      */
     public function create()
     {
-        $title = 'Tambah Data Mahasiswa';
-        $slug = 'mahasiswa';
+        $title = 'Tambah Data prodi';
+        $slug = 'prodi';
         $dataProdi = prodi::all();
-        return view('produk.create', compact('title','slug','dataProdi'));
+        return view('produk.createprodi', compact('title','slug'));
     }
 
     /**
@@ -36,16 +37,14 @@ class mahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $result = mahasiswa::insert([
-            'nim_mahasiswa'=> $request->nim,
-            'nama_mahasiswa'=> $request->nama,
-            'angkatan_mahasiswa'=> $request->angkatan,
-            'kd_prodi'=> $request->prodi,
+        $result = prodi::insert([
+            'kd_prodi'=> $request->kode,
+            'nama_prodi'=> $request->nama,
             'created_at'=> now(),
             'updated_at'=> now()
         ]);
         if($result){
-            return redirect('/mahasiswa');
+            return redirect('/prodi');
         }else{
             return $this->create();
         }
@@ -54,23 +53,24 @@ class mahasiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show( $id)
     {
-        
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit( $id)
     {
-        $title = 'Perbarui Data Mahasiswa';
-        $slug = 'mahasiswa';
+        $title = 'Perbarui Data Prodi';
+        $slug = 'prodi';
         $dataMhs = mahasiswa::join('prodi', 'mahasiswa.kd_prodi','=','prodi.kd_prodi')
                     ->where('nim_mahasiswa','=', $id)
                     ->first();
-        $dataProdi = prodi::all();
-        return view('mahasiswa.update', compact('title','slug','dataMhs','dataProdi'));
+        $dataProdi = prodi::where('kd_prodi', '=',$id)
+                    ->first();
+        return view('prodi.update', compact('title','slug','dataProdi','dataMhs'));
     }
 
     /**
@@ -78,23 +78,24 @@ class mahasiswaController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $id = $request->nim;
-        mahasiswa::where('nim_mahasiswa','=', $id)
+        $id = $request->kode;
+        prodi::where('kd_prodi','=', $id)
                     ->update([
-                        'nama_mahasiswa' => $request->nama,
-                        'angkatan_mahasiswa' => $request->angkatan,
-                        'kd_prodi' => $request->prodi,
-        ]); return redirect('/mahasiswa');
+                        
+                        'nama_prodi' => $request->nama,
+                        
+        ]);
+        return redirect('/prodi');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy( $id)
     {
-        mahasiswa::where('nim_mahasiswa',$id)
+        prodi::where('kd_prodi',$id)
         ->delete();
         
-        return redirect('/mahasiswa');
+        return redirect('/prodi');
     }
 }

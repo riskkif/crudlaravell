@@ -10,7 +10,7 @@
 </tr>
 </thead>
                         <tbody>
-                                @foreach ($dataMhs as $item)
+                                @foreach ($dataProdi as $item)
                                 <tr>
                                         <td>{{ $item->kd_prodi }}</td>
                                         <td>{{ $item->nama_prodi }}</td>

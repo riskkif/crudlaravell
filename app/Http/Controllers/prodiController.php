@@ -16,9 +16,9 @@ class prodiController extends Controller
         $title = 'prodi';
         $slug = 'prodi';
         $dataProdi = prodi::all();
-        $dataMhs = mahasiswa::join('prodi', 'mahasiswa.kd_prodi','=','prodi.kd_prodi')
-        ->get();
-        return view('prodi.index', compact('title','slug','dataMhs','dataProdi'));
+        // $dataMhs = mahasiswa::join('prodi', 'mahasiswa.kd_prodi','=','prodi.kd_prodi')
+        // ->get();
+        return view('prodi.index', compact('title','slug','dataProdi'));
     }
 
     /**

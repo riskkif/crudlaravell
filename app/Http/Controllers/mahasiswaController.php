@@ -32,7 +32,7 @@ class mahasiswaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage.fdvdfv
      */
     public function store(Request $request)
     {
